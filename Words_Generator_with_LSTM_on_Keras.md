@@ -1,11 +1,28 @@
-
+<style TYPE="text/css">
+code.has-jax {font: inherit; font-size: 100%; background: inherit; border: inherit;}
+</style>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'] // removed 'code' entry
+    }
+});
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 # Words Generator with LSTM on Keras
 
 ##### Wei-Ying Wang 6/13/2017
 
-This is a simple LSTM model built with Keras. The purpose of this tutorial is to help you gain solid understanding of LSTM model and the usage of Keras.
+This is a simple LSTM model built with Keras. The purpose of this tutorial is to help you gain solid understanding of LSTM model and the usage of Keras. You can download the related files on [MyGithub](https://github.com/wayinone/Char_LSTM).
 
-The code here wants to build [Karpathy's Character-Level Language Models](https://gist.github.com/karpathy/d4dee566867f8291f086) with Keras. Karpathy he post the idea on his [blog](http://karpathy.github.io/2015/05/21/rnn-effectiveness/). It is a very fun blog post, which generates shakespear's article, as well as Latext file with many math symbols. I guess we will never run out of papers this way...
+The code here wants to build [Karpathy's Character-Level Language Models](https://gist.github.com/karpathy/d4dee566867f8291f086) with Keras. Karpathy posted the idea on his [blog](http://karpathy.github.io/2015/05/21/rnn-effectiveness/). It is a very fun blog post, which generates shakespear's article, as well as Latext file with many math symbols. I guess we will never run out of papers this way...
 
 I found a lot of "typo" in the official document of [keras](keras.io). Don't be too harsh to them; it is expected since keras is a huge module and it is hard for their document to keep track of their own update. I write this tutorial to help people that want to try LSTM on Keras. I spent a lot of time looking into the script of keras, which can be found in your python folder:
 ```
@@ -18,7 +35,6 @@ Python 3.6.0 (v3.6.0:41df79263a11, Dec 23 2016, 08:06:12) [MSC v.1900 64 bit (AM
 
 keras version 1.2.2
 ```
-
 
 ```python
 import numpy as np
@@ -107,13 +123,13 @@ x_tmp,y_tmp = x_nTd[:N,:,:],y_n[:N,:]
 
 
 ```python
-print('This are 15 of thesamples of a slice of `x_tmp`:\n')
+print('This are 15 of the samples of a slice of `x_tmp`:\n')
 print(AuxFcn.translate(x_tmp[200:215,-1,:],ix2char))
 print('\n The following is corresponding `y`, You can see that `y_n[i,:]=x[i+1,0,:]`:\n')
 print(AuxFcn.translate(y_tmp[200:215,:],ix2char))
 ```
 
-    This are 15 of thesamples of a slice of `x_tmp`:
+    This are 15 of the samples of a slice of `x_tmp`:
     
     cius is chief e
     
@@ -313,7 +329,7 @@ You might be wondered what is `stateful` argument when building the first LSTM l
 model.add(LSTM(...,stateful=False))
 ```
 
-If using `stateful=True`, when parameter update by SGD for 1 batch (here we set `batchsize=10`), say we have the activation $h_1^*,...,h_T^*$ and $s_1^*,...,s_T^*$. Then, in the next batch, the $h_0$ will be set as $h_T^*$  and the $s_0$ will be set as $s_T^*$. 
+If using `stateful=True`, when parameter update by SGD for 1 batch (here we set `batchsize=10`), say we have the activation $h_1^\star,...,h_T^\star$ and $s_1^\star,...,s_T^\star$. Then, in the next batch, the $h_0$ will be set as $h_T^\star$  and the $s_0$ will be set as $s_T^\star$. 
 The previous procedure doesn't make a lot of sense. I just put it the way so you can understand. So, when will we use `stateful=True`? For example: when every time step you want to output a prediction (rather than output a prediction using 6 time steps, as we are doing here) We will, in the end, build that word generator that using previous word to generate the next word, at that time, we will turn this parameter on.
 
 The defaut value is `stateful=False`.
