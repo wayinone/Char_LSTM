@@ -1,7 +1,7 @@
 
 # Words Generator with LSTM on Keras
 
-##### Wei-Ying Wang 6/13
+##### Wei-Ying Wang 6/13/2017
 
 This is a simple LSTM model built with Keras. The purpose of this tutorial is to help you gain some solid understand LSTM model and the usage of Keras.
 
